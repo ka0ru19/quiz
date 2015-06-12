@@ -6,4 +6,9 @@
 //  Copyright (c) 2015年 LifeisTech. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+class SettingViewController: UIViewController {
+    
+    
+}

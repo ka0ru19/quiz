@@ -24,6 +24,12 @@ class QuizViewController: UIViewController {
     //クイズを格納する配列
     var quizArray = [NSMutableArray]()
     
+    //カウンタ
+    //var count:Float = 0.0
+    
+    //タイマー
+    //var timer:NSTimer!
+    
     //クイズを表示するTextView
     @IBOutlet var quizTextView: UITextView!
     
@@ -48,15 +54,21 @@ class QuizViewController: UIViewController {
         
         //添字[5]は問題番号を示す検番
         //------------------------ここから下にクイズを書く------------------------//
+        //quizArray.append(["問題文X ...?","選択肢1","選択肢2","選択肢3",AnsNumber(Int),X])
         quizArray.append(["問題文1 都道府県の数は？","47","51","53",1,1])
         quizArray.append(["問題文2 孫さん","au","docomo","softbank",3,2])
         quizArray.append(["問題文3 Steve Jobs","Apple","Microsoft","SONY",1,3])
         quizArray.append(["問題文4 iOSのプログラミング言語","Java","Ruby","Swift",3,4])
         quizArray.append(["問題文5 石の上にも","ぼたもち","三年","蜂",2,5])
         quizArray.append(["問題文6 M-T-W-T-?-S-S","F","K","R",1,6])
-
+        quizArray.append(["問題文7 一番高いのは","東京都庁","横浜ランドマークタワー","六本木ヒルズ",2,7])
         //------------------------ここから下にクイズを書く------------------------//
+        
+        
+        
+            
         choiceQuiz()  //シャッフルする
+        
     }
     
     func choiceQuiz() {
@@ -70,12 +82,16 @@ class QuizViewController: UIViewController {
         //問題文(quizArray[random][0])をテキストラベルに代入
         quizTextView.text = quizArray[random][0] as NSString
         
+        
         //選択肢のボタンにそれぞれ選択肢のテキストをセット
         for var i = 0; i < choiceButtons.count; i++ {
             choiceButtons[i].setTitle(quizArray[random][i+1] as NSString, forState: .Normal)
             
             //どのボタンが押されたか判別するためのtagをセット
             choiceButtons[i].tag = i + 1;
+            
+            //choiceButtons[i].addTarget(self, action:"start:", forControlEvents: .TouchUpInside)
+            
             
         }
     }
@@ -98,9 +114,9 @@ class QuizViewController: UIViewController {
         }
         // アニメーションを開始
         AnswerMark.startAnimating()
-        let delay = 0.6 * Double(NSEC_PER_SEC) //delay秒で正誤マークの表示を終了
-        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(time, dispatch_get_main_queue()) { //マーク表示終了後の処理
+        let delay = 0.6 * Double(NSEC_PER_SEC) //delay秒間、正誤マークの表示を終了
+        let animatime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(animatime, dispatch_get_main_queue()) { //マーク表示終了後の処理
             self.AnswerMark.stopAnimating() //表示終了
             self.AnswerMark.image = nil
             
@@ -115,6 +131,7 @@ class QuizViewController: UIViewController {
         }
         
         
+        
         println("正答数:\(correctAnswer)\n")
         /*
         //解いた問題数の合計が予め設定していた問題数に達したら
@@ -126,6 +143,24 @@ class QuizViewController: UIViewController {
         }
 */
     }
+    
+    
+    /* タイマー機能
+    func start(sender:UIButton){
+        if timer.valid == true {
+            //タイマーをリセット
+            timer.invalidate()
+            //count = 0
+        }
+        //タイマーの生成。0.1秒ごとに" timer: "を呼び出す
+        NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "OnUpdate:", userInfo: nil, repeats: true)
+    }
+    func OnUpdate(timer : NSTimer){
+        self.count += 0.1
+        println(self.count)
+    }
+*/
+    
     
     func performSegueToResult() {
         performSegueWithIdentifier("toResultView", sender: nil)

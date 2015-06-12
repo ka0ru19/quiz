@@ -10,31 +10,31 @@
 	<string>Quiz</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>DFC3121E49D2A0324988313A41D3390D3D8DD410</key>
-		<string>https://github.com/Life-is-Tech-iOS-Team/Camp.git</string>
+		<key>C0F11937EC31AF9A12429149DCC39B34FF2A9ADB</key>
+		<string>https://github.com/ka0ru19/quiz.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Quiz/Quiz.xcodeproj</string>
+	<string>Quiz.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>DFC3121E49D2A0324988313A41D3390D3D8DD410</key>
-		<string>../../..</string>
+		<key>C0F11937EC31AF9A12429149DCC39B34FF2A9ADB</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/Life-is-Tech-iOS-Team/Camp.git</string>
+	<string>https://github.com/ka0ru19/quiz.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>DFC3121E49D2A0324988313A41D3390D3D8DD410</string>
+	<string>C0F11937EC31AF9A12429149DCC39B34FF2A9ADB</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>DFC3121E49D2A0324988313A41D3390D3D8DD410</string>
+			<string>C0F11937EC31AF9A12429149DCC39B34FF2A9ADB</string>
 			<key>IDESourceControlWCCName</key>
-			<string>Camp</string>
+			<string>Quiz</string>
 		</dict>
 	</array>
 </dict>
