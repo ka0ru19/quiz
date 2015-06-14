@@ -25,10 +25,10 @@ class QuizViewController: UIViewController {
     var quizArray = [NSMutableArray]()
     
     //カウンタ
-    //var count:Float = 0.0
+    var count:Float = 0.0
     
     //タイマー
-    //var timer:NSTimer!
+    var timer:NSTimer!
     
     //クイズを表示するTextView
     @IBOutlet var quizTextView: UITextView!
@@ -42,15 +42,17 @@ class QuizViewController: UIViewController {
     let AnswerFalse:UIImage! = UIImage(named: "false.png")
     //var AnsAnimeArray = [NSArray]()
     var AnsTrueAnimeArray : Array<UIImage> = []
+//    var ans = [UIImage]()
     var AnsFalseAnimeArray : Array<UIImage> = []
     
     
     override func viewDidLoad() { //アプリ起動後の最初の処理
         super.viewDidLoad()
         
+        
         AnsTrueAnimeArray.append(AnswerTrue)
         AnsFalseAnimeArray.append(AnswerFalse)
-        AnswerMark.image = nil
+//        AnswerMark.image = nil
         
         //添字[5]は問題番号を示す検番
         //------------------------ここから下にクイズを書く------------------------//
@@ -64,11 +66,43 @@ class QuizViewController: UIViewController {
         quizArray.append(["問題文7 一番高いのは","東京都庁","横浜ランドマークタワー","六本木ヒルズ",2,7])
         //------------------------ここから下にクイズを書く------------------------//
         
+//        let image = UIImage(named: "true.png")!
+//        AnswerMark.image = image
+//        AnswerMark.alpha = 1.0
+//        UIView.animateWithDuration(5.0, animations: { () -> Void in
+//            // self.AnswerMark.alpha = 0.0
+//            
+//        }) { (flag) -> Void in
+//            // self.AnswerMark.alpha = 0.0
+//            println("aaa")
+//        }
         
+//        UIView.beginAnimations("some", context: nil)
+//        
+//        UIView.setAnimationDuration(0.5)
+//        UIView.setAnimationDelay(2.0)
+//        
+//        AnswerMark.alpha = 0.5
+//        
+//        UIView.commitAnimations()
         
-            
+        delay(3.0, closure: { () -> () in
+            self.AnswerMark.alpha = 0.0
+        })
+        
         choiceQuiz()  //シャッフルする
         
+        timer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "OnUpdate:", userInfo: nil, repeats: true)
+        timer.fire() // タイマー起動
+    }
+    
+    func delay(delay:Double, closure:()->()) {
+        dispatch_after(
+            dispatch_time(
+                DISPATCH_TIME_NOW,
+                Int64(delay * Double(NSEC_PER_SEC))
+            ),
+            dispatch_get_main_queue(), closure)
     }
     
     func choiceQuiz() {
@@ -90,7 +124,7 @@ class QuizViewController: UIViewController {
             //どのボタンが押されたか判別するためのtagをセット
             choiceButtons[i].tag = i + 1;
             
-            //choiceButtons[i].addTarget(self, action:"start:", forControlEvents: .TouchUpInside)
+//            choiceButtons[i].addTarget(self, action:"start:", forControlEvents: .TouchUpInside)
             
             
         }
@@ -101,23 +135,27 @@ class QuizViewController: UIViewController {
         print("\(sum)問目の問題( 残り\(questionNumber-sum+1)問 ), ")
         println("random　-> \(random)")
         print("\(sum)番目の問題(Q\(quizArray[random][5] as Int)) は \(sender.tag)番目の選択肢を選択 ")
-        AnswerMark.animationRepeatCount = 10; //n回
-        AnswerMark.animationDuration = 5; //0.8秒に設定
+//        AnswerMark.animationRepeatCount = 10; //n回
+//        AnswerMark.animationDuration = 5; //0.8秒に設定
+
+        AnswerMark.alpha = 1.0
+        
         if quizArray[random][4] as Int == sender.tag {
             //正解数を増やす
             correctAnswer++
             println("-> 正解")
-            AnswerMark.animationImages = AnsTrueAnimeArray
+            let image = UIImage(named: "true.png")!
+            AnswerMark.image = image
+            //AnswerMark.animationImages = AnsTrueAnimeArray
         }else{
             println("-> 不正解")
-            AnswerMark.animationImages = AnsFalseAnimeArray
+            let image = UIImage(named: "false.png")!
+            AnswerMark.image = image
+            // AnswerMark.animationImages = AnsFalseAnimeArray
         }
-        // アニメーションを開始
-        AnswerMark.startAnimating()
-        let delay = 0.6 * Double(NSEC_PER_SEC) //delay秒間、正誤マークの表示を終了
-        let animatime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
-        dispatch_after(animatime, dispatch_get_main_queue()) { //マーク表示終了後の処理
-            self.AnswerMark.stopAnimating() //表示終了
+        
+        delay(0.6, closure: { () -> () in
+            self.AnswerMark.alpha = 0.0
             self.AnswerMark.image = nil
             
             //解いた問題数の合計が予め設定していた問題数に達したら
@@ -127,10 +165,38 @@ class QuizViewController: UIViewController {
                 self.quizArray.removeAtIndex(self.random)  //添字[random]の問題を排除
                 self.choiceQuiz() //次の問題を選出
             }
+        })
+        
+//        //解いた問題数の合計が予め設定していた問題数に達したら
+//        if self.sum == self.questionNumber {
+//            self.performSegueToResult()  //結果画面へ
+//        }else{
+//            self.quizArray.removeAtIndex(self.random)  //添字[random]の問題を排除
+//            self.choiceQuiz() //次の問題を選出
+//        }
 
-        }
+        
+        // アニメーションを開始
+//        AnswerMark.startAnimating()
+//        let delay = 0.6 * Double(NSEC_PER_SEC) //delay秒間、正誤マークの表示を終了
+//        let animatime = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+//        dispatch_after(animatime, dispatch_get_main_queue()) { //マーク表示終了後の処理
+//            self.AnswerMark.stopAnimating() //表示終了
+//            self.AnswerMark.image = nil
+//            
+//            //解いた問題数の合計が予め設定していた問題数に達したら
+//            if self.sum == self.questionNumber {
+//                self.performSegueToResult()  //結果画面へ
+//            }else{
+//                self.quizArray.removeAtIndex(self.random)  //添字[random]の問題を排除
+//                self.choiceQuiz() //次の問題を選出
+//            }
+//
+//        }
         
         
+        
+        count = 5
         
         println("正答数:\(correctAnswer)\n")
         /*
@@ -145,21 +211,22 @@ class QuizViewController: UIViewController {
     }
     
     
-    /* タイマー機能
-    func start(sender:UIButton){
-        if timer.valid == true {
-            //タイマーをリセット
-            timer.invalidate()
-            //count = 0
-        }
-        //タイマーの生成。0.1秒ごとに" timer: "を呼び出す
-        NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "OnUpdate:", userInfo: nil, repeats: true)
-    }
+//    //タイマー機能
+//    func start(sender:UIButton){
+//        /*if timer.valid == true {
+//            //タイマーをリセット
+//            timer.invalidate()
+//            //count = 0
+//        }
+//*/
+//        //タイマーの生成。0.1秒ごとに" timer: "を呼び出す
+//        timer.fire()
+//    }
     func OnUpdate(timer : NSTimer){
-        self.count += 0.1
+        self.count -= 1
         println(self.count)
+        
     }
-*/
     
     
     func performSegueToResult() {

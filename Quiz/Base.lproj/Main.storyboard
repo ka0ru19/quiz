@@ -57,7 +57,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="348" y="288"/>
+            <point key="canvasLocation" x="-1" y="224"/>
         </scene>
         <!--Quiz View Controller-->
         <scene sceneID="H7m-Go-mtN">
